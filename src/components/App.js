@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { fetchPosts } from "../actions/posts";
+import PostList from "./PostList";
 
 class App extends Component {
   componentDidMount() {
@@ -10,8 +11,13 @@ class App extends Component {
   }
 
   render() {
-    console.log("props", this.props);
-    return <div>App</div>;
+    const { posts } = this.props;
+    console.log(posts);
+    return (
+      <div className="posts-container">
+        <PostList posts={posts} />
+      </div>
+    );
   }
 }
 function mapStateToProps(state) {
