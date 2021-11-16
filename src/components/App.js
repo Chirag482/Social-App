@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { fetchPosts } from "../actions/posts";
+import Navbar from "./Navbar";
 import PostList from "./PostList";
 
 class App extends Component {
@@ -14,8 +15,11 @@ class App extends Component {
     const { posts } = this.props;
     console.log(posts);
     return (
-      <div className="posts-container">
-        <PostList posts={posts} />
+      <div>
+        <Navbar />
+        <div className="posts-container">
+          <PostList posts={posts} />
+        </div>
       </div>
     );
   }
