@@ -6,8 +6,8 @@ import { fetchPosts } from "../actions/posts";
 import Navbar from "./Navbar";
 import PostList from "./PostList";
 import Page404 from "./Page404";
+import Home from "./Home";
 
-const Home = () => <div>HOME</div>;
 const Login = () => <div>LOG IN</div>;
 const SignUp = () => <div>Sign Up</div>;
 
@@ -23,7 +23,6 @@ class App extends Component {
       <Router>
         <div>
           <Navbar />
-          {/* <PostsList posts={posts} /> */}
           <ul>
             <li>
               <Link to="/">Home</Link>
@@ -36,7 +35,7 @@ class App extends Component {
             </li>
           </ul>
           <Routes>
-            <Route exact path="/" element={<Home />} />
+            <Route exact path="/" element={<Home posts={posts} />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="*" element={<Page404 />} /> {/*NO URL MATCHED*/}
