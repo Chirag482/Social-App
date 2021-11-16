@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Link, Route, Routes } from "react-router-dom";
 import { fetchPosts } from "../actions/posts";
 import Navbar from "./Navbar";
 import PostList from "./PostList";
+import Page404 from "./Page404";
 
 const Home = () => <div>HOME</div>;
 const Login = () => <div>LOG IN</div>;
@@ -36,8 +37,9 @@ class App extends Component {
           </ul>
           <Routes>
             <Route exact path="/" element={<Home />} />
-            <Route path="login" element={<Login />} />
-            <Route path="signup" element={<SignUp />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="*" element={<Page404 />} /> {/*NO URL MATCHED*/}
           </Routes>
         </div>
       </Router>
