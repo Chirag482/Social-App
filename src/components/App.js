@@ -7,8 +7,8 @@ import Navbar from "./Navbar";
 import PostList from "./PostList";
 import Page404 from "./Page404";
 import Home from "./Home";
+import LogIn from "./LogIn";
 
-const Login = () => <div>LOG IN</div>;
 const SignUp = () => <div>Sign Up</div>;
 
 class App extends Component {
@@ -23,20 +23,9 @@ class App extends Component {
       <Router>
         <div>
           <Navbar />
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-            <li>
-              <Link to="/signup">Signup</Link>
-            </li>
-          </ul>
           <Routes>
             <Route exact path="/" element={<Home posts={posts} />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<LogIn />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="*" element={<Page404 />} /> {/*NO URL MATCHED*/}
           </Routes>
