@@ -1,4 +1,11 @@
-import { LOGIN_FAILED, LOGIN_START, LOGIN_SUCCESS } from "./actionTypes";
+import {
+  LOGIN_FAILED,
+  LOGIN_START,
+  LOGIN_SUCCESS,
+  SIGNUP_FAILED,
+  SIGNUP_START,
+  SIGNUP_SUCCESS,
+} from "./actionTypes";
 
 import { getFormBody } from "../static/utils/utils";
 
@@ -42,5 +49,49 @@ export function login(email, password) {
         }
         dispatch(loginFailed(data.message));
       });
+  };
+}
+
+export function singUp(name, email, password, confirmPassword) {
+  return (dispatch) => {
+    dispatch(signUpStart());
+    const url = "http://codeial.codingninjas.com:8000/api/v2/users/signup";
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: getFormBody({
+        email,
+        password,
+        name,
+        confirm_password: confirmPassword,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          console.log(data);
+          dispatch(signUpSuccess(data.data.user));
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+}
+export function signUpStart() {
+  return {
+    type: SIGNUP_START,
+  };
+}
+export function signUpSuccess(user) {
+  return {
+    type: SIGNUP_SUCCESS,
+    user,
+  };
+}
+export function signUpFailed(errorMessage) {
+  return {
+    type: SIGNUP_FAILED,
+    error: errorMessage,
   };
 }

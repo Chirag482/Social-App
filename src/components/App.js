@@ -8,8 +8,7 @@ import PostList from "./PostList";
 import Page404 from "./Page404";
 import Home from "./Home";
 import LogIn from "./LogIn";
-
-const SignUp = () => <div>Sign Up</div>;
+import SignUp from "./SingUp";
 
 class App extends Component {
   componentDidMount() {
