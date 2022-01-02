@@ -10,6 +10,7 @@ import Page404 from "./Page404";
 import Home from "./Home";
 import LogIn from "./LogIn";
 import SignUp from "./SingUp";
+import { authenticateUser } from "../actions/auth";
 
 class App extends Component {
   componentDidMount() {
@@ -19,7 +20,13 @@ class App extends Component {
     const token = localStorage.getItem("token");
     if (token) {
       const user = jwt_decode(token);
-      console.log("user", user);
+      this.props.dispatch(
+        authenticateUser({
+          email: user.email,
+          _id: user._id,
+          name: user.name,
+        })
+      );
     }
   }
 

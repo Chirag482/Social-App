@@ -5,6 +5,8 @@ import {
   SIGNUP_FAILED,
   SIGNUP_START,
   SIGNUP_SUCCESS,
+  AUTHENTICATE_USER,
+  LOG_OUT,
 } from "./actionTypes";
 
 import { getFormBody } from "../static/utils/utils";
@@ -95,5 +97,18 @@ export function signUpFailed(errorMessage) {
   return {
     type: SIGNUP_FAILED,
     error: errorMessage,
+  };
+}
+
+export function authenticateUser(user) {
+  return {
+    type: AUTHENTICATE_USER,
+    user,
+  };
+}
+
+export function logOut() {
+  return {
+    type: LOG_OUT,
   };
 }

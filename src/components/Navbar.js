@@ -15,17 +15,17 @@ class Navbar extends Component {
             </Link>
           </div>
           <div className="search-container">
-            <i class="fas fa-search" id="search-icon"></i>
+            <i className="fas fa-search" id="search-icon"></i>
             <input placeholder="search"></input>
 
             <div className="search-results">
               <ul>
                 <li className="search-results-row">
-                  <i class="far fa-user"></i>
+                  <i className="far fa-user"></i>
                   <span>John Doe</span>
                 </li>
                 <li className="search-results-row">
-                  <i class="far fa-user"></i>
+                  <i className="far fa-user"></i>
                   <span>John Doe</span>
                 </li>
               </ul>
@@ -33,7 +33,7 @@ class Navbar extends Component {
           </div>
           <div className="right-nav">
             <div className="user">
-              <i class="far fa-user" id="user-dp"></i>
+              <i className="far fa-user" id="user-dp"></i>
               <span>ABC</span>
             </div>
             <div className="nav-links">
