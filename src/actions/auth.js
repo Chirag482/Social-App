@@ -35,7 +35,7 @@ export function login(email, password) {
     fetch(url, {
       method: "POST",
       headers: {
-        "Content-Type": "application/x-www-forms-urlencoded",
+        "Content-Type": "application/x-www-form-urlencoded",
       },
       body: getFormBody({ email, password }),
     })
@@ -43,6 +43,7 @@ export function login(email, password) {
       .then((data) => {
         console.log(data);
         if (data.success) {
+          localStorage.setItem("token", data.data.token);
           //dispatch an action to save user
           dispatch(loginSuccess(data.data.user));
           return;
@@ -72,6 +73,7 @@ export function singUp(name, email, password, confirmPassword) {
       .then((data) => {
         if (data.success) {
           console.log(data);
+          localStorage.setItem("token", data.data.token);
           dispatch(signUpSuccess(data.data.user));
         }
       })

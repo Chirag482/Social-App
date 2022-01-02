@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter as Router, Link, Route, Routes } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 
 import { fetchPosts } from "../actions/posts";
 import Navbar from "./Navbar";
@@ -14,6 +15,12 @@ class App extends Component {
   componentDidMount() {
     //fetch posts through API by dispatching an action
     this.props.dispatch(fetchPosts());
+    //persist the user using token
+    const token = localStorage.getItem("token");
+    if (token) {
+      const user = jwt_decode(token);
+      console.log("user", user);
+    }
   }
 
   render() {
