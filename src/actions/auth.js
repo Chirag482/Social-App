@@ -7,6 +7,7 @@ import {
   SIGNUP_SUCCESS,
   AUTHENTICATE_USER,
   LOG_OUT,
+  CLEAR_AUTH_STATE,
 } from "./actionTypes";
 
 import { getFormBody } from "../static/utils/utils";
@@ -110,5 +111,10 @@ export function authenticateUser(user) {
 export function logOut() {
   return {
     type: LOG_OUT,
+  };
+}
+export function clearAuthStae() {
+  return {
+    type: CLEAR_AUTH_STATE,
   };
 }

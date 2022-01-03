@@ -1,13 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux"; // used for connecting the component to the store
+import { Navigate } from "react-router";
 
-import { login } from "../actions/auth";
+import { clearAuthStae, login } from "../actions/auth";
 
 class LogIn extends Component {
   constructor(props) {
     super(props);
     this.emailInputRef = React.createRef();
     this.passwordInputRef = React.createRef();
+  }
+  componentWillUnmount() {
+    this.props.dispatch(clearAuthStae());
   }
   handleFormSubmit = (e) => {
     e.preventDefault();
@@ -19,6 +23,9 @@ class LogIn extends Component {
   };
   render() {
     const { error, inProgress } = this.props.auth;
+    if (this.props.auth.isLoggedIn) {
+      return <Navigate to="/" />;
+    }
     return (
       <form className="login-form">
         <span className="login-signup-header">Log In</span>

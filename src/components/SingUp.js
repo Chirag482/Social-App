@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Navigate } from "react-router";
 
-import { singUp } from "../actions/auth";
+import { clearAuthStae, singUp } from "../actions/auth";
 
 class SingUp extends Component {
   constructor(props) {
@@ -10,6 +11,9 @@ class SingUp extends Component {
     this.emailInputRef = React.createRef();
     this.passwordInputRef = React.createRef();
     this.confirmPasswordInputRef = React.createRef();
+  }
+  componentWillUnmount() {
+    this.props.dispatch(clearAuthStae());
   }
   handleFormSubmit = (e) => {
     e.preventDefault();
@@ -23,7 +27,9 @@ class SingUp extends Component {
   };
   render() {
     const { error, inProgress } = this.props.auth;
-    console.log(error, inProgress);
+    if (this.props.auth.isLoggedIn) {
+      return <Navigate to="/" />;
+    }
     return (
       <div>
         <form className="login-form">
