@@ -11,9 +11,9 @@ import Page404 from "./Page404";
 import Home from "./Home";
 import LogIn from "./LogIn";
 import SignUp from "./SingUp";
+import Settings from "./Settings";
 import { authenticateUser } from "../actions/auth";
 
-const Settings = () => <div> Settings </div>;
 const PrivateRoute = ({ children }) => {
   const isLoggedIn = children.props.auth.isLoggedIn;
   return isLoggedIn ? children : <Navigate to="/login" />;
