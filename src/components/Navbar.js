@@ -41,8 +41,10 @@ class Navbar extends Component {
           <div className="right-nav">
             {auth.isLoggedIn && (
               <div className="user">
-                <i className="far fa-user" id="user-dp"></i>
-                <span>{auth.user.name}</span>
+                <Link to="/settings">
+                  <i className="far fa-user" id="user-dp"></i>
+                  <span>{auth.user.name}</span>
+                </Link>
               </div>
             )}
 
