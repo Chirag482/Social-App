@@ -1,8 +1,15 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { logOut } from "../actions/auth";
 
 class Navbar extends Component {
+  logOut = () => {
+    localStorage.removeItem("token");
+    this.props.dispatch(logOut());
+  };
   render() {
+    const { auth } = this.props;
     return (
       <div>
         <nav className="nav">
@@ -32,21 +39,26 @@ class Navbar extends Component {
             </div>
           </div>
           <div className="right-nav">
-            <div className="user">
-              <i className="far fa-user" id="user-dp"></i>
-              <span>ABC</span>
-            </div>
+            {auth.isLoggedIn && (
+              <div className="user">
+                <i className="far fa-user" id="user-dp"></i>
+                <span>{auth.user.name}</span>
+              </div>
+            )}
+
             <div className="nav-links">
               <ul>
-                <li>
-                  <Link to="/login">Log In</Link>
-                </li>
-                <li>
-                  <Link to="/login">Log Out</Link>
-                </li>
-                <li>
-                  <Link to="/signup">Sign Up</Link>
-                </li>
+                {!auth.isLoggedIn && (
+                  <li>
+                    <Link to="/login">Log In</Link>
+                  </li>
+                )}
+                {auth.isLoggedIn && <li onClick={this.logOut}>Log Out</li>}
+                {!auth.isLoggedIn && (
+                  <li>
+                    <Link to="/signup">Sign Up</Link>
+                  </li>
+                )}
               </ul>
             </div>
           </div>
@@ -55,4 +67,10 @@ class Navbar extends Component {
     );
   }
 }
-export default Navbar;
+
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+  };
+}
+export default connect(mapStateToProps)(Navbar);
