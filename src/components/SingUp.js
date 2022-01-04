@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Navigate } from "react-router";
+import { Redirect } from "react-router-dom";
 
 import { clearAuthStae, singUp } from "../actions/auth";
 
@@ -28,7 +28,7 @@ class SingUp extends Component {
   render() {
     const { error, inProgress } = this.props.auth;
     if (this.props.auth.isLoggedIn) {
-      return <Navigate to="/" />;
+      return <Redirect to="/" />;
     }
     return (
       <div>

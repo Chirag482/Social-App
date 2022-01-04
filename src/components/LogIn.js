@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux"; // used for connecting the component to the store
-import { Navigate } from "react-router";
+import { Redirect } from "react-router";
 
 import { clearAuthStae, login } from "../actions/auth";
 
@@ -22,9 +22,11 @@ class LogIn extends Component {
     }
   };
   render() {
-    const { error, inProgress } = this.props.auth;
-    if (this.props.auth.isLoggedIn) {
-      return <Navigate to="/" />;
+    const { error, inProgress, isLoggedIn } = this.props.auth;
+    const { from } = this.props.location.state || { from: { pathname: "/" } };
+
+    if (isLoggedIn) {
+      return <Redirect to={from} />;
     }
     return (
       <form className="login-form">

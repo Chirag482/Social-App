@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { BrowserRouter as Router, Link, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import jwt_decode from "jwt-decode";
-import { Navigate } from "react-router";
+import { Redirect } from "react-router-dom";
 
 import { fetchPosts } from "../actions/posts";
 import Navbar from "./Navbar";
@@ -14,9 +14,28 @@ import SignUp from "./SingUp";
 import Settings from "./Settings";
 import { authenticateUser } from "../actions/auth";
 
-const PrivateRoute = ({ children }) => {
-  const isLoggedIn = children.props.auth.isLoggedIn;
-  return isLoggedIn ? children : <Navigate to="/login" />;
+const PrivateRoute = (privateRouteProps) => {
+  const { isLoggedIn, path, component: Component } = privateRouteProps;
+
+  return (
+    <Route
+      path={path}
+      render={(props) => {
+        return isLoggedIn ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: {
+                from: props.location,
+              },
+            }}
+          />
+        );
+      }}
+    />
+  );
 };
 
 class App extends Component {
@@ -43,16 +62,23 @@ class App extends Component {
       <Router>
         <div>
           <Navbar />
-          <Routes>
-            <Route exact path="/" element={<Home posts={posts} />} />
+          <Switch>
             <Route
-              path="/settings"
-              element={<PrivateRoute>{<Settings auth={auth} />}</PrivateRoute>}
+              exact
+              path="/"
+              render={(props) => {
+                return <Home {...props} posts={posts} />;
+              }}
             />
-            <Route path="/login" element={<LogIn />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="*" element={<Page404 />} /> {/*NO URL MATCHED*/}
-          </Routes>
+            <Route path="/login" component={LogIn} />
+            <Route path="/signup" component={SignUp} />
+            <PrivateRoute
+              path="/settings"
+              component={Settings}
+              isLoggedIn={auth.isLoggedIn}
+            />
+            <Route component={Page404} />
+          </Switch>
         </div>
       </Router>
     );
