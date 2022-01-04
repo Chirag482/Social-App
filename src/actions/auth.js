@@ -8,9 +8,14 @@ import {
   AUTHENTICATE_USER,
   LOG_OUT,
   CLEAR_AUTH_STATE,
+  EDIT_USER_FAIL,
+  EDIT_USER_SUCCESS,
 } from "./actionTypes";
 
-import { getFormBody } from "../static/utils/utils";
+import {
+  getFormBody,
+  getAuthTokenFromLocalStorage,
+} from "../static/utils/utils";
 
 export function startLoggin() {
   return {
@@ -116,5 +121,50 @@ export function logOut() {
 export function clearAuthStae() {
   return {
     type: CLEAR_AUTH_STATE,
+  };
+}
+
+export function editUserSuccess(user) {
+  return {
+    type: EDIT_USER_SUCCESS,
+    user,
+  };
+}
+export function editUserFail(error) {
+  return {
+    type: EDIT_USER_FAIL,
+    error,
+  };
+}
+
+export function editUser(name, password, confirmPassword, userId) {
+  return (dispatch) => {
+    const URL = "http://codeial.codingninjas.com:8000/api/v2/users/edit";
+    fetch(URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Bearer ${getAuthTokenFromLocalStorage()}`,
+      },
+      body: getFormBody({
+        name,
+        password,
+        name,
+        confirm_password: confirmPassword,
+        id: userId,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        if (data.success) {
+          dispatch(editUserSuccess(data.data.user));
+          if (data.data.token) {
+            localStorage.setItem("token", data.data.token);
+          }
+          return;
+        }
+        dispatch(editUserFail(data.message));
+      });
   };
 }
