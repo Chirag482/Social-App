@@ -13,6 +13,7 @@ import SignUp from "./SingUp";
 import Settings from "./Settings";
 import User from "./User";
 import { authenticateUser } from "../actions/auth";
+import { fetchFriends } from "../actions/friends";
 
 const PrivateRoute = (privateRouteProps) => {
   const { isLoggedIn, path, component: Component } = privateRouteProps;
@@ -53,11 +54,12 @@ class App extends Component {
           name: user.name,
         })
       );
+      this.props.dispatch(fetchFriends());
     }
   }
 
   render() {
-    const { posts, auth } = this.props;
+    const { posts, auth, friends } = this.props;
     return (
       <Router>
         <div>
@@ -67,7 +69,14 @@ class App extends Component {
               exact
               path="/"
               render={(props) => {
-                return <Home {...props} posts={posts} />;
+                return (
+                  <Home
+                    {...props}
+                    posts={posts}
+                    friends={friends}
+                    isLoggedIn={auth.isLoggedIn}
+                  />
+                );
               }}
             />
             <Route path="/login" component={LogIn} />
@@ -93,6 +102,7 @@ function mapStateToProps(state) {
   return {
     posts: state.posts,
     auth: state.auth,
+    friends: state.friends,
   };
 }
 export default connect(mapStateToProps)(App);
