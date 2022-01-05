@@ -10,12 +10,21 @@ class User extends Component {
       this.props.dispatch(fetchUserProfile(match.params.userId));
     }
   }
-
+  checkIfUserIsAFriend = () => {
+    const { match, friends } = this.props;
+    const userId = match.params.userId;
+    const index = friends.map((friend) => friend.to_user._id).indexOf(userId);
+    if (index !== -1) {
+      return true;
+    }
+    return false;
+  };
   render() {
     const { user, inProgress } = this.props.profile;
     if (inProgress) {
       return <h1>Loading!!</h1>;
     }
+    const isUserAFriend = this.checkIfUserIsAFriend();
     return (
       <div className="settings">
         <div className="img-container">
@@ -35,7 +44,11 @@ class User extends Component {
         </div>
 
         <div className="btn-grp">
-          <button className="button save-btn">Add Friend</button>
+          {isUserAFriend ? (
+            <button className="button save-btn">Remove Friend</button>
+          ) : (
+            <button className="button save-btn">Add Friend</button>
+          )}
         </div>
       </div>
     );
@@ -45,6 +58,7 @@ class User extends Component {
 function mapStateToProps(state) {
   return {
     profile: state.profile,
+    friends: state.friends,
   };
 }
 export default connect(mapStateToProps)(User);
