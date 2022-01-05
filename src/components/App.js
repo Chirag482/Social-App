@@ -6,12 +6,12 @@ import { Redirect } from "react-router-dom";
 
 import { fetchPosts } from "../actions/posts";
 import Navbar from "./Navbar";
-import PostList from "./PostList";
 import Page404 from "./Page404";
 import Home from "./Home";
 import LogIn from "./LogIn";
 import SignUp from "./SingUp";
 import Settings from "./Settings";
+import User from "./User";
 import { authenticateUser } from "../actions/auth";
 
 const PrivateRoute = (privateRouteProps) => {
@@ -75,6 +75,11 @@ class App extends Component {
             <PrivateRoute
               path="/settings"
               component={Settings}
+              isLoggedIn={auth.isLoggedIn}
+            />
+            <PrivateRoute
+              path="/user/:userId"
+              component={User}
               isLoggedIn={auth.isLoggedIn}
             />
             <Route component={Page404} />

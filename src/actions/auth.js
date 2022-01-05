@@ -149,14 +149,12 @@ export function editUser(name, password, confirmPassword, userId) {
       body: getFormBody({
         name,
         password,
-        name,
         confirm_password: confirmPassword,
         id: userId,
       }),
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         if (data.success) {
           dispatch(editUserSuccess(data.data.user));
           if (data.data.token) {

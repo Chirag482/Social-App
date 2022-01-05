@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Moment from "react-moment"; //for timezone support
+import { Link } from "react-router-dom";
 
 import "../static/styles/postlist.css";
 
@@ -12,7 +13,9 @@ class PostsList extends Component {
           <div className="post-wrapper" key={post._id}>
             <div className="post-header">
               <div className="post-avatar">
-                <i className="far fa-user"></i>
+                <Link to={`/user/${post.user._id}`}>
+                  <i className="far fa-user"></i>
+                </Link>
                 <div>
                   <span className="post-author">{post.user.name}</span>
                   <span className="post-time">
