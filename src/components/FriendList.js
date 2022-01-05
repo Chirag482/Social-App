@@ -7,11 +7,11 @@ function FriendList(props) {
     <div className="friends-list">
       <div className="header">Friends</div>
       {friends && friends.length === 0 && (
-        <div className="n0-friends">No Friends Found!!</div>
+        <div className="no-friends">No Friends Found!!</div>
       )}
       {friends &&
         friends.map((friend) => {
-          <FriendListItem user={friend} key={friend._id} />;
+          return <FriendListItem user={friend.to_user} key={friend._id} />;
         })}
     </div>
   );

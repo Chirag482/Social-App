@@ -1,4 +1,4 @@
-import { FETCH_FRIENDS_SUCCESS } from "./actionTypes";
+import { FETCH_FRIENDS_SUCCESS, ADD_FRIEND } from "./actionTypes";
 import { getAuthTokenFromLocalStorage } from "../static/utils/utils";
 export function fetchFriendsSuccess(friends) {
   return {
@@ -10,7 +10,7 @@ export function fetchFriends() {
   console.log("bvkdjbkjbsdkbvksdbksd");
   return (dispatch) => {
     const URL =
-      "http:codeial.codingninjas.com:8000/api/v2/friendship/fetch_user_friends";
+      "http://codeial.codingninjas.com:8000/api/v2/friendship/fetch_user_friends";
 
     fetch(URL, {
       headers: {
@@ -21,8 +21,15 @@ export function fetchFriends() {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          dispatch(data.data.friends());
+          dispatch(fetchFriendsSuccess(data.data.friends));
         }
       });
+  };
+}
+
+export function addFriend(friend) {
+  return {
+    type: ADD_FRIEND,
+    friend,
   };
 }
